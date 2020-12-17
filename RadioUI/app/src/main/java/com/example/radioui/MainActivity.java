@@ -14,15 +14,17 @@ import android.widget.ToggleButton;
 public class MainActivity extends AppCompatActivity {
 
 
-    RadioGroup radioGroup;
-    ToggleButton onOff;
-    double frequency = 20;
-    TextView tv1, tv2, tv3;
-    EditText et1;
-    PlayWave wave = new PlayWave();
-    AudioManager audioManager;
-    int id, freq;
-    SeekBar volumeSeekBar, freqSeekBar;
+    private RadioGroup radioGroup;
+    private ToggleButton onOff;
+    private double frequency = 20;
+    private TextView tv1, tv2, tv3;
+    private EditText et1;
+    private final PlayWave wave = new PlayWave();
+    private AudioManager audioManager;
+    private int id;
+    private int freq;
+    private SeekBar volumeSeekBar;
+    private SeekBar freqSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
