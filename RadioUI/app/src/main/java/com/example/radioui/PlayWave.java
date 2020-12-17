@@ -8,14 +8,12 @@ public class PlayWave {
 
     private final int sampleRate = 192000;
     private final AudioTrack audioTrack;
-    int bufferSize = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
     private int sampleCount;
-    short sampleCheck;
-    int amplitude=32767;
-    double twoPi = Math.PI * 2;
+    private final int amplitude=32767;
+    private final double twoPi = Math.PI * 2;
 
     public PlayWave() {
-
+        int bufferSize = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
         audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize, AudioTrack.MODE_STATIC);
     }
 
@@ -47,6 +45,7 @@ public class PlayWave {
         sampleCount = (int) ((float) sampleRate / frequency);
         short[] samples = new short[sampleCount];
         double phase = 0;
+        short sampleCheck;
 
         for (int i = 0; i < sampleCount; i++) {
             samples[i] = (short) (amplitude * Math.sin(phase));
