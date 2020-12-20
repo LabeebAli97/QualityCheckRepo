@@ -1,0 +1,4 @@
+include ':libFreq'
+include ':FreqLib'
+include ':app'
+rootProject.name = "ENDE"
