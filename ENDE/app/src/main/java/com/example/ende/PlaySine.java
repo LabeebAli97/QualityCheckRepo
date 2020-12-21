@@ -7,7 +7,7 @@ import android.media.AudioTrack;
 public class PlaySine {
 
     private final int sampleRate = 48000;
-    private AudioTrack audioTrack;
+    private final AudioTrack audioTrack;
     int bufferSize = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
     private int sampleCount;
 
@@ -21,7 +21,7 @@ public class PlaySine {
 
         sampleCount = (int) (((float) sampleRate / 100));
 
-        short samples[] = new short[sampleCount];
+        short[] samples = new short[sampleCount];
         int amplitude = 32767;
         double twoPi = Math.PI * 2;
         double phase = 0;

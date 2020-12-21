@@ -86,42 +86,39 @@ public class Encode extends Fragment {
                 et1.setText("Enter a valid Code");
             }
 
-            Thread encodeThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
+            Thread encodeThread = new Thread(() -> {
 
-                    if (code.length() > 0 && code.length() <= 10) {
-                        boolean press = tb1.isChecked();
-                        if (press) {
+                if (code.length() > 0 && code.length() <= 10) {
+                    boolean press = tb1.isChecked();
+                    if (press) {
 
-                            startStopCode();
+                        startStopCode();
 
-                            for (int i = 0, j = 1; i < code.length(); i++, j++) {
-                                freqArray[i] = Integer.parseInt(code.substring(i, j));
+                        for (int i = 0, j = 1; i < code.length(); i++, j++) {
+                            freqArray[i] = Integer.parseInt(code.substring(i, j));
 
-                                wave.setWave(frequencyArray[freqArray[i]]);
-                                wave.start();
+                            wave.setWave(frequencyArray[freqArray[i]]);
+                            wave.start();
 
-                                try {
-                                    Thread.sleep(120);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                                wave.stop();
-                                markerCode();
+                            try {
+                                Thread.sleep(120);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
 
-                            startStopCode();
-                            tb1.toggle();
-
-                        } else {
                             wave.stop();
-
+                            markerCode();
                         }
-                    }
 
+                        startStopCode();
+                        tb1.toggle();
+
+                    } else {
+                        wave.stop();
+
+                    }
                 }
+
             });
 
             encodeThread.start();
