@@ -29,30 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.527" />
 
-    <Button
-        android:id="@+id/startbutton"
-        android:layout_width="144dp"
-        android:layout_height="43dp"
-        android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
-
-    <Button
-        android:id="@+id/stopbutton"
-        android:layout_width="142dp"
-        android:layout_height="44dp"
-        android:text="Stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="166dp"
@@ -153,5 +129,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="159dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginRight="110dp"
+        android:fontFamily="serif-monospace"
+        android:text="ToggleButton"
+        android:textColor="#021475"
+        android:textColorHighlight="#021475"
+        android:textColorHint="#021475"
+        android:textOff="Receive"
+        android:textOn="Stop"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +24,6 @@ import androidx.fragment.app.Fragment;
 public class ContentDecoder extends Fragment {
 
     private final int sampleFreq = 192000;
-    private Button startRec;
-    private Button stopRec;
     private Button saveContact;
     private Boolean recording;
     private Boolean decodingName;
@@ -32,6 +31,7 @@ public class ContentDecoder extends Fragment {
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
+    private ToggleButton tb1;
 
 
 
@@ -49,25 +49,20 @@ public class ContentDecoder extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startRec = (Button) view.findViewById(R.id.startbutton);
-        stopRec = (Button) view.findViewById(R.id.stopbutton);
+
         saveContact = (Button) view.findViewById(R.id.button);
 
         tv1 = (TextView) view.findViewById(R.id.textView);
         tv2 = (TextView) view.findViewById(R.id.textView2);
         tv3 = (TextView) view.findViewById(R.id.textView3);
 
-
-
-        startRec.setEnabled(true);
-        stopRec.setEnabled(false);
+        tb1 = (ToggleButton) view.findViewById(R.id.toggleButton2);
 
         decodingName = false;
         decodingNumber = false;
-//        tv2.setText("Code :");
+//      tv2.setText("Code :");
 
         startButton();
-        stopButton();
         saveContactButton();
 
     }
@@ -93,27 +88,24 @@ public class ContentDecoder extends Fragment {
     private void startButton() {
 
 
-        startRec.setOnClickListener(v -> {
+        tb1.setOnClickListener(v -> {
+            boolean press = tb1.isChecked();
+            if(press) {
 
-            Thread recordThread = new Thread(() -> {
-                recording = true;
-                startRecord();
-            });
-            recordThread.start();
-            startRec.setEnabled(false);
-            stopRec.setEnabled(true);
+                Thread recordThread = new Thread(() -> {
+                    recording = true;
+                    startRecord();
+                });
+                recordThread.start();
+
+            }else{
+                recording = false;
+            }
         });
+
+
     }
 
-    private void stopButton() {
-        stopRec.setOnClickListener(v -> {
-
-            recording = false;
-            startRec.setEnabled(true);
-            stopRec.setEnabled(false);
-
-        });
-    }
 
     private void startRecord() {
 
@@ -138,12 +130,12 @@ public class ContentDecoder extends Fragment {
 
                 tv1.setText(String.valueOf(freq));
 
-                if (freq > 11800 && freq < 12200) {
+                if (freq > 18750 && freq < 18850) {
                     decodingName = true;
                     decodingNumber = false;
                 }
 
-                if (freq > 13800 && freq < 14200) {
+                if (freq > 18850 && freq < 18950) {
                     decodingNumber = true;
                     decodingName = false;
                 }
@@ -230,8 +222,11 @@ public class ContentDecoder extends Fragment {
                         decodeResultNumber.append("9");
                     } else if (freq > frequencyArray[0] - 50 && freq < frequencyArray[0] + 50) {
                         decodeResultNumber.append("0");
-                    } else if (freq > 22800 && freq < 23200) {
+                    } else if (freq > 22900 && freq < 23100) {
                         decodeResultNumber.append("*");
+                    } else if (freq > 23100 && freq < 23300){
+                        recording = false;
+                        tb1.toggle();
                     }
 
                 }
@@ -242,8 +237,10 @@ public class ContentDecoder extends Fragment {
             decodeCodeNumber(decodeResultNumber);
 
             audioRecord.stop();
+
             decodingName = false;
             decodingNumber = false;
+
 
         } catch (Exception e) {
             e.printStackTrace();

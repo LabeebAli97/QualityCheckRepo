@@ -128,7 +128,7 @@ public class ContentEncoder extends Fragment {
                     wave.start();
 
                     try {
-                        Thread.sleep(150);
+                        Thread.sleep(120);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -172,7 +172,7 @@ public class ContentEncoder extends Fragment {
                     markerCode();
                 }
 
-                startStopCode();
+                StopCode();
                 tb1.toggle();
 
             } else {
@@ -183,8 +183,20 @@ public class ContentEncoder extends Fragment {
 
     }
 
+    private void StopCode() {
+        wave.setWave(23200);
+        wave.start();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wave.stop();
+    }
+
     private void startStopCodeNumber() {
-        wave.setWave(14000);
+        wave.setWave(18900);
         wave.start();
 
         try {
@@ -207,7 +219,7 @@ public class ContentEncoder extends Fragment {
     }
 
     private void startStopCode() {
-        wave.setWave(12000);
+        wave.setWave(18800);
         wave.start();
 
         try {
