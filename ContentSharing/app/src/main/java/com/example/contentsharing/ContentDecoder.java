@@ -66,8 +66,8 @@ public class ContentDecoder extends Fragment {
         decodingNumber = false;
 //        tv2.setText("Code :");
 
-        startRecButton();
-        stopRecButton();
+        startButton();
+        stopButton();
         saveContactButton();
 
     }
@@ -90,7 +90,7 @@ public class ContentDecoder extends Fragment {
         });
     }
 
-    private void startRecButton() {
+    private void startButton() {
 
 
         startRec.setOnClickListener(v -> {
@@ -105,7 +105,7 @@ public class ContentDecoder extends Fragment {
         });
     }
 
-    private void stopRecButton() {
+    private void stopButton() {
         stopRec.setOnClickListener(v -> {
 
             recording = false;
