@@ -1,16 +1,20 @@
 package com.example.contentsharing;
+
 import com.example.libfreq.Complex;
 import com.example.libfreq.FFT;
 
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +25,16 @@ public class ContentDecoder extends Fragment {
     private final int sampleFreq = 192000;
     private Button startRec;
     private Button stopRec;
+    private Button saveContact;
     private Boolean recording;
-    private Boolean decodingName,decodingNumber;
+    private Boolean decodingName, decodingNumber;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
-    private static final int[] frequencyArray = new int[]{ 18000, 18100, 18200, 19000, 19100, 19200, 19300, 19400, 19500, 19600, 19700, 19800, 19900 ,20000, 20200, 20400, 20600, 20800, 21000, 21100, 21200, 21300, 21400, 21500, 21600, 21900, 22000, 22100, 22200, 22300, 22400, 22500, 22600, 22700, 18400, 18500, 18600};
+
+
+
+    private static final int[] frequencyArray = new int[]{18000, 18100, 18200, 19000, 19100, 19200, 19300, 19400, 19500, 19600, 19700, 19800, 19900, 20000, 20200, 20400, 20600, 20800, 21000, 21100, 21200, 21300, 21400, 21500, 21600, 21900, 22000, 22100, 22200, 22300, 22400, 22500, 22600, 22700, 18400, 18500, 18600};
 
 
     @Nullable
@@ -42,10 +50,12 @@ public class ContentDecoder extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         startRec = (Button) view.findViewById(R.id.startbutton);
         stopRec = (Button) view.findViewById(R.id.stopbutton);
+        saveContact = (Button) view.findViewById(R.id.button);
 
         tv1 = (TextView) view.findViewById(R.id.textView);
         tv2 = (TextView) view.findViewById(R.id.textView2);
-        tv3 = (TextView) view.findViewById(R.id.textView4);
+        tv3 = (TextView) view.findViewById(R.id.textView3);
+
 
 
         startRec.setEnabled(true);
@@ -53,10 +63,30 @@ public class ContentDecoder extends Fragment {
 
         decodingName = false;
         decodingNumber = false;
-        tv2.setText("Code :");
+//        tv2.setText("Code :");
 
         startRecButton();
         stopRecButton();
+        saveContactButton();
+
+    }
+
+    private void saveContactButton() {
+        saveContact.setOnClickListener(v -> {
+
+            if (!(tv2.getText().toString().equals("Name Not Detected") || tv3.getText().toString().equals("Number Not Detected"))) {
+
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                intent.putExtra(ContactsContract.Intents.Insert.NAME, tv2.getText().toString());
+                intent.putExtra(ContactsContract.Intents.Insert.PHONE, tv3.getText().toString());
+
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "Invalid Contact", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     private void startRecButton() {
@@ -205,15 +235,15 @@ public class ContentDecoder extends Fragment {
 
                 }
             }
-            
+
             decodeCodeName(decodeResultName);
-            
+
             decodeCodeNumber(decodeResultNumber);
 
             audioRecord.stop();
             decodingName = false;
             decodingNumber = false;
-        
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -242,7 +272,7 @@ public class ContentDecoder extends Fragment {
                 }
             }
 
-            tv3.setText("Number : " + decode);
+            tv3.setText(" " + decode);
 
 
         } else {
@@ -260,7 +290,7 @@ public class ContentDecoder extends Fragment {
             for (int i = 0; i < decodeResult.length(); i++) {
                 freqDecodeArray[i] = decodeResult.substring(i, i + 1);
             }
-           
+
             a = freqDecodeArray[0];
             decode.append(a);
             for (int i = 1; i < freqDecodeArray.length; i++) {
@@ -269,20 +299,20 @@ public class ContentDecoder extends Fragment {
                     a = freqDecodeArray[i];
 
                     if (!freqDecodeArray[i].equals("*")) {
-                        if(freqDecodeArray[i-3].equals(" ") || freqDecodeArray[i-2].equals(" ")){
+                        if (i > 3 && (freqDecodeArray[i - 3].equals(" ") || freqDecodeArray[i - 2].equals(" "))) {
                             decode.append(freqDecodeArray[i].toUpperCase());
-                        }else {
+                        } else {
                             decode.append(freqDecodeArray[i].toLowerCase());
                         }
                     }
                 }
             }
 
-            tv2.setText("Code : " + decode);
+            tv2.setText(" " + decode);
 
 
         } else {
-            tv2.setText("Code Not Detected");
+            tv2.setText("Name Not Detected");
         }
     }
 

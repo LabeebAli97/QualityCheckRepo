@@ -1,5 +1,4 @@
 package com.example.contentsharing;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -10,26 +9,24 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class ContentEncoder extends Fragment {
 
-    private EditText et1,et2;
+    private EditText et1, et2;
     private ToggleButton tb1;
     int[] freqArray = new int[11];
     private String code;
     private String number;
     private final PlaySine wave = new PlaySine();
-    TextView tv1;
     private TextView tv2;
     private SeekBar volumeSeekBar;
     private AudioManager audioManager;
-    private char aChar;
 
-    private static final int[] frequencyArray = new int[]{ 18000, 18100, 18200, 19000, 19100, 19200, 19300, 19400, 19500, 19600, 19700, 19800, 19900 ,20000, 20200, 20400, 20600, 20800, 21000, 21100, 21200, 21300, 21400, 21500, 21600, 21900, 22000, 22100, 22200, 22300, 22400, 22500, 22600, 22700, 18400, 18500, 18600};
+
+    private static final int[] frequencyArray = new int[]{18000, 18100, 18200, 19000, 19100, 19200, 19300, 19400, 19500, 19600, 19700, 19800, 19900, 20000, 20200, 20400, 20600, 20800, 21000, 21100, 21200, 21300, 21400, 21500, 21600, 21900, 22000, 22100, 22200, 22300, 22400, 22500, 22600, 22700, 18400, 18500, 18600};
     //    private static final int[] frequencyArray=new int[]{10000,1000,2000,3000,4000,5000,6000,7000,8000,9000};
 
     @Nullable
@@ -89,46 +86,16 @@ public class ContentEncoder extends Fragment {
             number = et2.getText().toString();
 
             if (code.length() > 50 || code.length() == 0) {
-                et1.setText("Enter a valid Code");
+                et1.setText("Unknown Name");
+            }
+            if (!(number.length() == 10)) {
+                et2.setText("Enter a valid Phone Number");
             }
 
             Thread encodeThread = new Thread(() -> {
 
-                if (code.length() > 0 && code.length() <= 50) {
-                    boolean press = tb1.isChecked();
-                    if (press) {
 
-                        startStopCode();
-
-
-                        for (int i = 0; i < code.length(); i++) {
-                            aChar = code.charAt(i);
-                            if(aChar != ' ') {
-                                wave.setWave(frequencyArray[(int) aChar - 65]);
-                            } else{
-                                wave.setWave(frequencyArray[26]);
-                            }
-                            wave.start();
-
-                            try {
-                                Thread.sleep(150);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            wave.stop();
-                            markerCode();
-                        }
-
-                        startStopCode();
-
-
-                    } else {
-                        wave.stop();
-
-                    }
-                }
-
+                sendName(code);
 
                 //
 
@@ -141,13 +108,48 @@ public class ContentEncoder extends Fragment {
         });
     }
 
+    private void sendName(String code) {
+
+        if (number.length() == 10 && code.length() > 0 && code.length() <= 50) {
+            boolean press = tb1.isChecked();
+            if (press) {
+
+                startStopCode();
+
+
+                for (int i = 0; i < code.length(); i++) {
+                    char aChar = code.charAt(i);
+                    if (aChar != ' ') {
+                        wave.setWave(frequencyArray[(int) aChar - 65]);
+                    } else {
+                        wave.setWave(frequencyArray[26]);
+                    }
+                    wave.start();
+
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    wave.stop();
+                    markerCode();
+                }
+
+                startStopCode();
+
+
+            } else {
+                wave.stop();
+
+            }
+        }
+    }
+
     private void sendNumber(String number) {
 
-        if (number.length() > 10 || number.length() == 0) {
-            et2.setText("Enter a valid Code");
-        }
 
-        if (number.length() > 0 && number.length() <= 10) {
+        if (number.length() == 10 && code.length() > 0 && code.length() <= 50) {
             boolean press = tb1.isChecked();
             if (press) {
 

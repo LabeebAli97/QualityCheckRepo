@@ -3,20 +3,11 @@ package com.example.contentsharing;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
 import com.example.contentsharing.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
