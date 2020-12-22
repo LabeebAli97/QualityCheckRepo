@@ -27,7 +27,8 @@ public class ContentDecoder extends Fragment {
     private Button stopRec;
     private Button saveContact;
     private Boolean recording;
-    private Boolean decodingName, decodingNumber;
+    private Boolean decodingName;
+    private Boolean decodingNumber;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;

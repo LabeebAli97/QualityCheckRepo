@@ -12,8 +12,6 @@ import com.example.contentsharing.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    final int REQUEST_PERMISSION_CODE = 1000;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
+        int REQUEST_PERMISSION_CODE = 1000;
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO,

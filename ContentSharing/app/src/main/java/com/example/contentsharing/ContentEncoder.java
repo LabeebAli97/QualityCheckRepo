@@ -15,9 +15,10 @@ import androidx.fragment.app.Fragment;
 
 public class ContentEncoder extends Fragment {
 
-    private EditText et1, et2;
+    private EditText et1;
+    private EditText et2;
     private ToggleButton tb1;
-    int[] freqArray = new int[11];
+    private int[] freqArray = new int[11];
     private String code;
     private String number;
     private final PlaySine wave = new PlaySine();
@@ -88,7 +89,7 @@ public class ContentEncoder extends Fragment {
             if (code.length() > 50 || code.length() == 0) {
                 et1.setText("Unknown Name");
             }
-            if (!(number.length() == 10)) {
+            if (number.length() != 10) {
                 et2.setText("Enter a valid Phone Number");
             }
 
