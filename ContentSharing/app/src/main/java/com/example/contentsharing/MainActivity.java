@@ -3,11 +3,14 @@ package com.example.contentsharing;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.contentsharing.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {

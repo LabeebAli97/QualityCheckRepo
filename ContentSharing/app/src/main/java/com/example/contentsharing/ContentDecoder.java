@@ -34,7 +34,6 @@ public class ContentDecoder extends Fragment {
     private ToggleButton tb1;
 
 
-
     private static final int[] frequencyArray = new int[]{18000, 18100, 18200, 19000, 19100, 19200, 19300, 19400, 19500, 19600, 19700, 19800, 19900, 20000, 20200, 20400, 20600, 20800, 21000, 21100, 21200, 21300, 21400, 21500, 21600, 21900, 22000, 22100, 22200, 22300, 22400, 22500, 22600, 22700, 18400, 18500, 18600};
 
 
@@ -90,7 +89,7 @@ public class ContentDecoder extends Fragment {
 
         tb1.setOnClickListener(v -> {
             boolean press = tb1.isChecked();
-            if(press) {
+            if (press) {
 
                 Thread recordThread = new Thread(() -> {
                     recording = true;
@@ -98,7 +97,7 @@ public class ContentDecoder extends Fragment {
                 });
                 recordThread.start();
 
-            }else{
+            } else {
                 recording = false;
             }
         });
@@ -224,7 +223,7 @@ public class ContentDecoder extends Fragment {
                         decodeResultNumber.append("0");
                     } else if (freq > 22900 && freq < 23100) {
                         decodeResultNumber.append("*");
-                    } else if (freq > 23100 && freq < 23300){
+                    } else if (freq > 23100 && freq < 23300) {
                         recording = false;
                         tb1.toggle();
                     }
