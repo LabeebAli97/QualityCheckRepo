@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CodeShare</string>
+    <string name="tab_text_1">Encode</string>
+    <string name="tab_text_2">Decode</string>
+</resources>
