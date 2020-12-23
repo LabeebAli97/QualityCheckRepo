@@ -18,7 +18,7 @@ public class PlaySine {
 
     public void setWave(int frequency) {
 
-        sampleCount = (int) (((float) sampleRate / 10));
+        sampleCount = (int) (((float) sampleRate / 100));
 
         short[] samples = new short[sampleCount];
         int amplitude = 32767;
