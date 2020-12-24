@@ -17,6 +17,18 @@ import androidx.fragment.app.Fragment;
 
 public class Encode extends Fragment {
 
+    private static final int MIN_LENGTH = 0;
+    private static final int MAX_LENGTH = 10;
+    private static final int MARKER_FREQ = 23000;
+    private static final double VOLUME_MUL_VALUE = 6.67;
+    private static final int START_STOP_FREQ = 12000;
+    private static final int CODE_DURATION = 120;
+    private static final int START_CODE_DURATION = 300;
+    private static final int TRANSFER_COMPLETED = 22400;
+    private static final int START_STOP_CODE_DURATION = 300;
+    private static final int[] FREQUENCY_ARRAY = new int[]{18000, 18400, 18800, 19200, 19600, 20000,
+            20400, 20800, 21200, 22000};
+    private final PlaySine wave = new PlaySine();
     TextView mRangeInfoDisplay;
     private String mCode;
     private TextView mVolDisplay;
@@ -25,30 +37,16 @@ public class Encode extends Fragment {
     private SeekBar mVolumeSeekBar;
     int[] mFreqArray = new int[11];
     private AudioManager mAudioManager;
-    public static final int MIN_LENGTH = 0;
-    public static final int MAX_LENGTH = 10;
-    public static final int MARKER_FREQ = 23000;
-    private final PlaySine wave = new PlaySine();
-    public static final double VOLUME_MUL_VALUE = 6.67;
-    public static final int START_STOP_FREQ = 12000;
-    public static final int CODE_DURATION = 120;
-    public static final int START_CODE_DURATION = 300;
-    public static final int TRANSFER_COMPLETED = 22400;
-    public static final int START_STOP_CODE_DURATION = 300;
-
-    private static final int[] mFrequencyArray = new int[]{18000, 18400, 18800, 19200, 19600, 20000, 20400, 20800, 21200, 22000};
-
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.encode_layout, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mCodeEdit = (EditText) view.findViewById(R.id.editTextNumber);
         mRangeInfoDisplay = (TextView) view.findViewById(R.id.textView);
         mShareButton = (ToggleButton) view.findViewById(R.id.toggleButton);
@@ -60,7 +58,6 @@ public class Encode extends Fragment {
         encodeInit();
         volumeSeekBarInit();
     }
-
 
     /**
      * Volume Adjustment using SeekBar
@@ -80,25 +77,20 @@ public class Encode extends Fragment {
                         progress, 0);
                 mVolDisplay.setText(String.valueOf((int) (progress * VOLUME_MUL_VALUE)));
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
     }
 
-
     /**
      * Validation of Code that given by user and transferring the code
      */
     private void encodeInit() {
-
         mShareButton.setOnClickListener(v -> {
-
             mCode = mCodeEdit.getText().toString();
 
             if (mCode.length() > MAX_LENGTH || mCode.length() == MIN_LENGTH) {
@@ -110,35 +102,27 @@ public class Encode extends Fragment {
                 if (mCode.length() > MIN_LENGTH && mCode.length() <= MAX_LENGTH) {
                     boolean mPress = mShareButton.isChecked();
                     if (mPress) {
-
                         startStopCode();
 
                         for (int i = 0, j = 1; i < mCode.length(); i++, j++) {
-
                             mFreqArray[i] = Integer.parseInt(mCode.substring(i, j));
-                            wave.setWave(mFrequencyArray[mFreqArray[i]]);
+                            wave.setWave(FREQUENCY_ARRAY[mFreqArray[i]]);
                             wave.start();
-
                             try {
                                 Thread.sleep(CODE_DURATION);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-
                             wave.stop();
                             markerCode();
                         }
-
                         stopCode();
                         mShareButton.toggle();
-
                     } else {
                         wave.stop();
-
                     }
                 }
             });
-
             encodeThread.start();
         });
     }
@@ -154,7 +138,6 @@ public class Encode extends Fragment {
         wave.stop();
     }
 
-
     /**
      * 23KHz audio frequency is generated  for 120ms when markerCode() is called
      */
@@ -169,7 +152,6 @@ public class Encode extends Fragment {
         wave.stop();
     }
 
-
     /**
      * Sets the starting and ending audio frequency of code to 12KHz for 300ms
      */
@@ -183,5 +165,4 @@ public class Encode extends Fragment {
         }
         wave.stop();
     }
-
 }

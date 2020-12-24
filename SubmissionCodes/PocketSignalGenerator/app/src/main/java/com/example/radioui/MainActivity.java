@@ -13,6 +13,12 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MIN_FREQUENCY = 20;
+    private static final int MAX_FREQUENCY = 20000;
+    private static final double VOLUME_MUL_VALUE = 6.67;
+    private static final int SQUARE_CODE = 2131362101;
+    private static final int TRIANGLE_CODE = 2131361806;
+    private static final int SAWTOOTH_CODE = 2131362060;
     private RadioGroup mRadioGroup;
     private ToggleButton mOnOff;
     private TextView mFreqRangeText, mVolDisplayText, mFreqDisplayText;
@@ -22,14 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar mFreqSeekBar;
     private double mFrequency = 20;
     private final PlayWave wave = new PlayWave();
-    public static final int MIN_FREQUENCY = 20;
-    public static final int MAX_FREQUENCY = 20000;
-    public static final double VOLUME_MUL_VALUE = 6.67;
-    public static final int SQUARE_CODE = 2131362101;
-    public static final int TRIANGLE_CODE = 2131361806;
-    public static final int SAWTOOTH_CODE = 2131362060;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         /** When Toggle Button is pressed */
 
         mOnOff.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
             int mId = mRadioGroup.getCheckedRadioButtonId();         // Gives Radio Button id in the Radio Group
 
             if (isChecked) {
@@ -80,15 +77,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * Calls the SetWave function in the PlayWave class if start button is checked
      */
 
     private void onOffSin() {
-
         checkFrequencyRange();
-
 
         if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
             wave.setWave((int) mFrequency);                           // Calls the setWave function in the PlayWave class
@@ -101,13 +95,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Calls the setWaveSquare function in the PlayWave class if start button is checked
      */
 
     private void onOffSquare() {
-
         checkFrequencyRange();
 
         if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
@@ -121,13 +113,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Calls the setWaveTriangle function in the PlayWave class if start button is checked
      */
 
     private void onOffTriangle() {
-
         checkFrequencyRange();
 
         if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
@@ -141,13 +131,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Calls the setWaveSawTooth function in the PlayWave class if start button is checked
      */
 
     private void onOffSawTooth() {
-
         checkFrequencyRange();
 
         if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
@@ -160,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     /**
      * Volume Adjustment through Volume Seek Bar
@@ -180,30 +167,23 @@ public class MainActivity extends AppCompatActivity {
                         progress, 0);
                 mVolDisplayText.setText(String.valueOf((int) (progress * VOLUME_MUL_VALUE)));             // Updating the Volume text box with progressed value
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
     }
 
-
     /**
      * Frequency Adjustment through Frequency Seek Bar
      */
 
     private void freqSeekBarInit() {
-
-
         mFreqSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                 wave.stop();
                 mFreqDisplayText.setText(String.valueOf(progress));                        // Updating the progressed frequency value to the text view Box
                 mFreqEnter.setText(String.valueOf(progress));                        // Updating the progressed frequency value to the edit text Box
@@ -211,21 +191,18 @@ public class MainActivity extends AppCompatActivity {
                 wave.setWave((int) mFrequency);
                 wave.start();
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 int mFreq = mFreqSeekBar.getProgress();
                 wave.setWave((int) mFreq);
                 wave.start();
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 wave.stop();
             }
         });
     }
-
 
     /**
      * Checking the given frequency Range
@@ -234,8 +211,8 @@ public class MainActivity extends AppCompatActivity {
     private void checkFrequencyRange() {
         try {
             mFrequency = Double.parseDouble(mFreqEnter.getText().toString());
-            if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
 
+            if (mFrequency >= MIN_FREQUENCY && mFrequency <= MAX_FREQUENCY) {
                 mFreqDisplayText.setText(String.valueOf(mFrequency));
             } else {
                 mFreqRangeText.setText("Enter a frequency in range of 20Hz-20Khz");

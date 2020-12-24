@@ -6,21 +6,27 @@ import android.media.AudioTrack;
 
 public class PlaySine {
 
+    private static final int AMPLITUDE = 32767;
+    private static final int SAMPLE_RATE = 48000;
+    private static final double TWO_PI = Math.PI * 2;
+    private static final int SAMPLE_COUNT_SCALE = 100;
+    private static final int BUFFER_SIZE = AudioTrack.getMinBufferSize(SAMPLE_RATE,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT);  //// Contains Estimated Minimum buffer size required for an AudioTrack
     private int mSampleCount;
     private final AudioTrack mAudioTrack;
-    public static final int AMPLITUDE = 32767;
-    public static final int SAMPLE_RATE = 48000;
-    public static final double TWO_PI = Math.PI * 2;
-    public static final int SAMPLE_COUNT_SCALE = 100;
-    public static final int BUFFER_SIZE = AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);  //// Contains Estimated Minimum buffer size required for an AudioTrack
 
     /**
      * Constructor Class
      */
     public PlaySine() {
-        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE, AudioTrack.MODE_STATIC);
+        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+                SAMPLE_RATE,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                BUFFER_SIZE,
+                AudioTrack.MODE_STATIC);
     }
-
 
     /**
      * Generate Sine Wave from 20Hz to 20KHz
@@ -37,7 +43,6 @@ public class PlaySine {
         mAudioTrack.write(mSamples, 0, mSampleCount);  //Writes the audio data to the audio sink for playback (streaming mode), or copies audio data for later playback (static buffer mode).
     }
 
-
     /**
      * Reloads and Plays the Wave or Starts the Wave generation
      */
@@ -47,7 +52,6 @@ public class PlaySine {
         mAudioTrack.play();
     }
 
-
     /**
      * Stops the Wave Generation
      */
@@ -55,5 +59,4 @@ public class PlaySine {
         mAudioTrack.flush();
         mAudioTrack.stop();
     }
-
 }
